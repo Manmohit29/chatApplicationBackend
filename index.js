@@ -5,6 +5,7 @@ const connectDB = require("./config/dbConnection");
 require("dotenv").config();
 const app = express();
 const socket = require("socket.io");
+const url = process.env.URL;
 
 //Cors
 app.use(cors());
@@ -16,7 +17,7 @@ app.use(express.json());
 connectDB();
 
 //PORT from env file
-const port = process.env.PORT;
+const port = process.env.PORT || 6000;
 
 //API's
 app.use("/api/users", require("./routes/userRoutes"));
@@ -28,7 +29,7 @@ const server = app.listen(port, () => {
 
 const io = socket(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: url,
     credentials: true,
   },
 });
